@@ -1,0 +1,73 @@
+#!/bin/bash
+# De Jonghe Nico inspierd by Ruben Barkow thanks
+
+if [ "$(whoami &2>/dev/null)" != "root" ] && [ "$(id -un &2>/dev/null)" != "root" ] ; then
+  echo "Your not ROOT please run script as root
+  
+Error: You must be root to run this script.
+Enter
+sudo su
+"
+  exit 1
+fi
+echo "  OK";
+
+# Remove all existing packages
+PHPLIST=$(for i in $(dpkg -l | grep php|awk '{ print $2 }' ); do echo $i; done)
+echo these pachets will be removed: $PHPLIST 
+
+apt-get remove $PHPLIST
+
+#Creates a file in /etc/apt/preferences.d/php5_2);
+#
+#Package: php5
+#Pin: release a=karmic
+#Pin-Priority: 991
+
+
+echo ''>/etc/apt/preferences.d/php5_2
+for i in $PHPLIST ; do echo "Package: $i
+Pin: release a=karmic
+Pin-Priority: 991
+">>/etc/apt/preferences.d/php5_2; done
+
+# duplicates your existing sources.list replacing lucid with karmic and save it in sources.list.d:
+#sed s/lucid/karmic/g /etc/apt/sources.list | sudo tee /etc/apt/sources.list.d/karmic.list
+
+echo "# needed sources for php5.2:
+deb http://de.archive.ubuntu.com/ubuntu/ karmic main restricted
+deb-src http://de.archive.ubuntu.com/ubuntu/ karmic main restricted
+
+deb http://de.archive.ubuntu.com/ubuntu/ karmic-updates main restricted
+deb-src http://de.archive.ubuntu.com/ubuntu/ karmic-updates main restricted
+
+deb http://de.archive.ubuntu.com/ubuntu/ karmic universe
+deb-src http://de.archive.ubuntu.com/ubuntu/ karmic universe
+deb http://de.archive.ubuntu.com/ubuntu/ karmic-updates universe
+deb-src http://de.archive.ubuntu.com/ubuntu/ karmic-updates universe
+
+deb http://de.archive.ubuntu.com/ubuntu/ karmic multiverse
+deb-src http://de.archive.ubuntu.com/ubuntu/ karmic multiverse
+deb http://de.archive.ubuntu.com/ubuntu/ karmic-updates multiverse
+deb-src http://de.archive.ubuntu.com/ubuntu/ karmic-updates multiverse
+
+deb http://security.ubuntu.com/ubuntu karmic-security main restricted
+deb-src http://security.ubuntu.com/ubuntu karmic-security main restricted
+deb http://security.ubuntu.com/ubuntu karmic-security universe
+deb-src http://security.ubuntu.com/ubuntu karmic-security universe
+deb http://security.ubuntu.com/ubuntu karmic-security multiverse
+deb-src http://security.ubuntu.com/ubuntu karmic-security multiverse
+" >> /etc/apt/sources.list.d/karmic.list
+
+apt-get update
+
+apache2ctl restart
+
+echo install new from karmic:
+apt-get -t karmic install $PHPLIST
+
+echo "-- goin to reinstall apache2 --" 
+aptitude install apache2
+apt-get -t karmic install libapache2-mod-php5
+
+apache2ctl restart
