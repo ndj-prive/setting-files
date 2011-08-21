@@ -154,9 +154,7 @@ alias twitter="google-chrome http://www.twitter.com"
 #alias wiki="google-chrome http://en.wikipedia.org/wiki/Main_Page"
 
 wiki () {
-	if [ -f $1 ] ; then
-		"google-chrome http://en.wikipedia.org/wiki/$1"
-	fi
+		google-chrome http://en.wikipedia.org/wiki/"$1"
 }
 
 ## functions
