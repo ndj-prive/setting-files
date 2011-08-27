@@ -6,3 +6,4 @@ startonline=1
 feed=http://www.demorgen.be/technocity/rss.xml;demorgen;1;:
 feed=http://www.linuxfoundation.org/news-media/blogs/browse/rss.xml;linux foundation;1;:
 feed=http://feeds.feedburner.com/tweakers/mixed;tweakers;1;:
+feed=http://groups.drupal.org/node/148119/feed;1;;
