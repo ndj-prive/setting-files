@@ -1,0 +1,104 @@
+#!/bin/bash
+
+alreadyRunning="Is already running\n"
+
+#Nautilus
+if [ -z "$(pgrep nautilus)" ]
+  then
+    nautilus &> /dev/null
+else
+    echo "\033[1m\033[1;34mNautilus: \033[0m \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+#Empathy == chat application
+if [ -z "$(pgrep empathy)" ]
+  then
+    # empathy is not running
+    # empathy &> /dev/null
+    echo "\033[1m\033[1;34mEmpathy:\033[0;32m need to enable back\n \033[0m"
+else
+    # empathy is running
+    echo "\033[1m\033[1;34mEmpathy: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep thunderbird-bin)" ]
+  then
+    # thunderbird is not running
+    thunderbird &> /dev/null
+else
+    # thunderbird is running
+    echo "\033[1m\033[1;34mThunderbird: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep VBoxSVC)" ]
+  then
+    # virtualbox is not running VBoxSVC
+    virtualbox &> /dev/null
+else
+    # virtual is already running
+    echo "\033[1m\033[1;34mVirtualbox:\033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep clementine)" ]
+  then
+    # clementine is not running
+    clementine &> /dev/null
+else
+    # clementine is already running
+    echo "\033[1m\033[1;34mClementine: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep gnome-shell)" ]
+  then
+    # terminator is not running
+    terminator &> /dev/null
+else
+    # terminator is already running
+    echo "\033[1m\033[1;34mTerminator: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep chrome)" ]
+  then
+    # chrome is not running
+    google-chrome &> /dev/null
+else
+    # chrome is already running
+    echo "\033[1m\033[1;34mGoogle Chrome: \033[0;32m"$alreadyRunning"\033[0m"
+fi	
+
+if [ -z "$(pgrep Tasque)" ]
+  then
+    # tasque is not running
+    tasque &> /dev/null
+else
+    # tasque is already running
+    echo "\033[1m\033[1;34mTasque: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep hotot)" ]
+  then
+    # hotot is not running
+    hotot &> /dev/null
+else
+    # hotot is already running
+    echo "\033[1m\033[1;34mHotot: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+if [ -z "$(pgrep freemind)" ]
+  then
+    # freemind is not running
+    freemind &> /dev/null
+else
+    # freemind is already running
+    echo "\033[1m\033[1;34mFreemind: \033[0;32m"$alreadyRunning"\033[0m"
+fi
+
+#dont know if this is gone work
+if [ -z "$(pgrep Aptana)" ]
+  then
+    # aptan
+    "./Aptana Studio 2.0/AptanaStudio" &> /dev/null
+else
+    # apatan alreday
+    echo "\033[1m\033[1;34mAptana: \033[0;32m"$alreadyRunning"\033[0m"
+fi
