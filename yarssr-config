@@ -5,5 +5,9 @@ usegnome=1
 startonline=1
 feed=http://www.demorgen.be/technocity/rss.xml;De Morgen;1;:
 feed=http://www.linuxfoundation.org/news-media/blogs/browse/rss.xml;Linux Foundation;1;:
-feed=http://feeds.feedburner.com/tweakers/mixed;Tweakers;1;:
+feed=http://feeds.feedburner.com/tweakers/mixed/;Tweakers;1;:
 feed=http://groups.drupal.org/node/148119/feed/;Drupal 8;1;:
+feed=http://drupal.org/taxonomy/term/14/0/feed/;Drupal Modules [all];1;:
+feed=http://feeds.feedburner.com/ProgsLife/;Programmers Life;1;:
+feed=http://feeds.feedburner.com/failblog/;Fail;1;:
+feed=http://groups.google.com/group/android-developers/feed/rss_v2_0_msgs.xml?num=50;Android Developers feed;1;:
