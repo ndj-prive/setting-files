@@ -34,6 +34,7 @@ if [ -z "$(pgrep VBoxSVC)" ]
   then
     # virtualbox is not running VBoxSVC
     virtualbox &> /dev/null
+    VBoxManage startvm "Ubuntu64"
 else
     # virtual is already running
     echo "\033[1m\033[1;34mVirtualbox:\033[0;32m"$alreadyRunning"\033[0m"
