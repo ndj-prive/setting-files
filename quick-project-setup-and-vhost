@@ -12,7 +12,14 @@ import sys
 import shutil
 import paramiko
 
-FirstArg = ""+sys.argv[1]
+drupalArg = raw_input('Create a drupal project, gitclone or new project [drupal/git/new]: ')
+
+if str(drupalArg).lower() == 'drupal':
+    FirstArg = 'drupal'
+elif str(drupalArg).lower() == 'git':
+    FirstArg = 'git'
+else:
+    FirstArg = 'new'
 
 varProjectname = raw_input('Enter projectname please: ')
 print 'A new project with the name', varProjectname, 'is build now'
@@ -41,7 +48,7 @@ def localfileCommands ():
         f.write( '<p>Remove me\n</p><p>' + varProjectname + '</p>' )
         f.close()
 
-        if str(FirstArg).lower() == "drupal":
+        if FirstArg == "drupal":
             #git://github.com/drupal/drupal.git
             os.remove('/home/nico/develop/php/' + varProjectname + '/index.php')
             print 'Downloading: Drupal lastest'
@@ -67,6 +74,24 @@ def localfileCommands ():
                 print "Allready 7 default"
             elif varVersionNumber == '8':
                 os.system("cd /home/nico/develop/php/" + varProjectname + "/drupal/ && git checkout -b drupal8 origin/8.x")
+            else:
+                print "Allready 7 default"
+
+        elif FirstArg == "git":
+            os.remove('/home/nico/develop/php/' + varProjectname + '/index.php')
+            print 'Downloading: Drupal lastest'
+            
+            counter = 0
+            varGitURL = str(raw_input('Enter GIT URL please: '))
+            while True:
+                counter = counter + 1
+                
+                if counter > 1:
+                    varGitURL = str(raw_input('Do not enter empty a GIT URL please: '))
+                
+                if len(varGitURL) > 2:
+                    os.system("cd /home/nico/develop/php/" + varProjectname + " && git clone " + varGitURL)
+                    break;
                            
     f = open('/etc/hosts', 'a')
     f.write( '192.168.56.101\t ' + varProjectname + ".dev\n" )
