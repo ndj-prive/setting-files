@@ -1,0 +1,99 @@
+#!/usr/bin/python
+
+'''
+Created on Sep 1, 2011
+@author: nicodejonghe
+
+This is a quick script for setingup vhosts with a virtualbox vm
+'''
+
+import os
+import sys
+import shutil
+import paramiko
+
+FirstArg = ""+sys.argv[1]
+
+varProjectname = raw_input('Enter projectname please: ')
+print 'A new project with the name', varProjectname, 'is build now'
+
+
+
+def connectSsh ():
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect('192.168.56.101', username='nico', password='a')
+    
+    return ssh
+
+def VMbashCommand (command):
+    ssh = connectSsh()    
+
+    stdin, stdout, stderr= ssh.exec_command(command)
+    stdin.write('a\n')
+    stdin.flush()
+    
+    stdout.readlines()
+    stderr.readlines()
+
+def localfileCommands ():
+    if not os.path.exists('/home/nico/develop/php/' + varProjectname):
+        os.mkdir('/home/nico/develop/php/'+ varProjectname)
+        f = open('/home/nico/develop/php/' + varProjectname + '/index.php' ,'w')
+        f.write( '<p>Remove me\n</p><p>' + varProjectname + '</p>' )
+        f.close()
+
+        if str(FirstArg).lower() == "drupal":
+            #git://github.com/drupal/drupal.git
+            os.remove('/home/nico/develop/php/' + varProjectname + '/index.php')
+            print 'Downloading: Drupal lastest'
+            os.system("cd /home/nico/develop/php/" + varProjectname + " && git clone git://github.com/drupal/drupal.git")
+            print 'Downloaded: Drupal lastest only need to install the database '
+            VMbashCommand("sudo -S sed -i 's/\/" + varProjectname + "/\/" + varProjectname + "\/drupal/g' /etc/apache2/sites-available/" + varProjectname)
+            print 'Rewriting: Sites-available File', varProjectname
+
+            print 'Starting: To set Drupal settings'
+            print 'Creating : file directory'
+            os.mkdir('/home/nico/develop/php/' + varProjectname + '/drupal/sites/default/files')
+            print 'Copying : the default.settings.php file'
+            shutil.copy2('/home/nico/develop/php/' + varProjectname + '/drupal/sites/default/default.settings.php', '/home/nico/develop/php/' + varProjectname + '/drupal/sites/default/settings.php')
+            os.chmod('/home/nico/develop/php/' + varProjectname + '/drupal/sites/default/files', 0777)
+            os.chmod('/home/nico/develop/php/' + varProjectname + '/drupal/sites/default/settings.php', 0777)
+            #os.system("cd /home/nico/develop/php/" + varProjectname + " && git clone git://github.com/drupal/drupal.git");
+            
+            varVersionNumber = raw_input('Which version i need to download: ')
+            
+            if varVersionNumber == '6':
+                os.system("git checkout -b drupal6 origin/6.x")
+            elif varVersionNumber == '7':
+                print "Allready 7 default"
+            elif varVersionNumber == '8':
+                os.system("git checkout -b drupal8 origin/8.x")
+
+    f = open('/etc/hosts', 'a')
+    f.write( '192.168.56.101\t ' + varProjectname + ".dev\n" )
+    f.close()
+
+
+
+VMbashCommand("mysql -u root -proot -N -e 'CREATE DATABASE `" + varProjectname + "`;'")
+print 'Created: database user: root - password: root - database name:', varProjectname
+VMbashCommand("sudo -S echo '127.0.0.1 \t " + varProjectname + ".dev' >> /etc/hosts")
+print 'Created: hosts rule on VM'
+VMbashCommand("sudo -S cp /etc/apache2/sites-available/my-default /etc/apache2/sites-available/" + varProjectname)
+print 'Created: File', varProjectname
+VMbashCommand("sudo -S sed -i 's/my-default/" + varProjectname + "/g' /etc/apache2/sites-available/" + varProjectname)
+print 'Writing: File', varProjectname
+localfileCommands()
+print 'Local Project: created'
+
+
+VMbashCommand("sudo -S a2ensite " + varProjectname)
+print 'Restarting server.....'
+VMbashCommand("sudo -S service apache2 restart")
+
+print "created new hosts rule on local and vm, also added new sites to apache2\n"
+print "Structur" 
+print 'end'    
+
+exit()
