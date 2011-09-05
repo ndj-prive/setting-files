@@ -17,8 +17,6 @@ FirstArg = ""+sys.argv[1]
 varProjectname = raw_input('Enter projectname please: ')
 print 'A new project with the name', varProjectname, 'is build now'
 
-
-
 def connectSsh ():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -61,19 +59,18 @@ def localfileCommands ():
             os.chmod('/home/nico/develop/php/' + varProjectname + '/drupal/sites/default/settings.php', 0777)
             #os.system("cd /home/nico/develop/php/" + varProjectname + " && git clone git://github.com/drupal/drupal.git");
             
-            varVersionNumber = raw_input('Which version i need to download: ')
+            varVersionNumber = raw_input('Which version i need to checkout: ')
             
             if varVersionNumber == '6':
-                os.system("git checkout -b drupal6 origin/6.x")
+                os.system("cd /home/nico/develop/php/" + varProjectname + "/drupal/ && git checkout -b drupal6 origin/6.x")
             elif varVersionNumber == '7':
                 print "Allready 7 default"
             elif varVersionNumber == '8':
-                os.system("git checkout -b drupal8 origin/8.x")
-
+                os.system("cd /home/nico/develop/php/" + varProjectname + "/drupal/ && git checkout -b drupal8 origin/8.x")
+                           
     f = open('/etc/hosts', 'a')
     f.write( '192.168.56.101\t ' + varProjectname + ".dev\n" )
     f.close()
-
 
 
 VMbashCommand("mysql -u root -proot -N -e 'CREATE DATABASE `" + varProjectname + "`;'")

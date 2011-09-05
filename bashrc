@@ -156,6 +156,10 @@ wiki () {
 		google-chrome http://en.wikipedia.org/wiki/"$1"
 }
 
+trans () {
+	get https://www.googleapis.com/language/translate/v2?key=USK9OIkLYXekxXyj90pQJpAu&q=bloem&source=nl&target=en&callback=handleResponse
+}
+
 ## functions
 extract () {
 	if [ -f $1 ] ; then
