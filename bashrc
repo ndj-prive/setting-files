@@ -151,6 +151,7 @@ alias df='df -h'
 alias google="google-chrome http://www.google.com/"
 alias twitter="google-chrome http://www.twitter.com"
 #alias wiki="google-chrome http://en.wikipedia.org/wiki/Main_Page"
+alias projectSetup="python ~/.projectSetup"
 
 wiki () {
 		google-chrome http://en.wikipedia.org/wiki/"$1"

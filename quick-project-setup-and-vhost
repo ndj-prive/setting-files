@@ -80,22 +80,70 @@ def localfileCommands ():
         elif FirstArg == "git":
             os.remove('/home/nico/develop/php/' + varProjectname + '/index.php')
             print 'Downloading: Drupal lastest'
-            
+
             counter = 0
             varGitURL = str(raw_input('Enter GIT URL please: '))
             while True:
                 counter = counter + 1
-                
+
                 if counter > 1:
                     varGitURL = str(raw_input('Do not enter empty a GIT URL please: '))
-                
+
                 if len(varGitURL) > 2:
                     os.system("cd /home/nico/develop/php/" + varProjectname + " && git clone " + varGitURL)
                     break;
-                           
+
     f = open('/etc/hosts', 'a')
     f.write( '192.168.56.101\t ' + varProjectname + ".dev\n" )
     f.close()
+
+    varCreateAptanaProject = str(raw_input('Create a Aptana php project [y/n]'))
+
+    if varCreateAptanaProject == 'y':
+        f = open('/home/nico/develop/php/' + varProjectname + '/.buildpath','w')
+        f.write('<?xml version="1.0" encoding="UTF-8"?>')
+        f.write('<buildpath>')
+        if FirstArg == "drupal":
+            f.write('\t<buildpathentry kind="src" path="drupal"/>')
+        else:
+            f.write('\t<buildpathentry kind="src" path="./"/>')
+        f.write('\t<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>')
+        f.write('</buildpath>')
+        f.close()
+        
+        f = open('/home/nico/develop/php/' + varProjectname + '/.project', 'w')
+        f.write('<?xml version="1.0" encoding="UTF-8"?>')
+        f.write('<projectDescription>')
+        f.write('\t<name>' + varProjectname + '</name>')
+        f.write('\t<comment></comment>')
+        f.write('\t<projects>')
+        f.write('\t</projects>')
+        f.write('\t<buildSpec>')
+        f.write('\t\t<buildCommand>')
+        f.write('\t\t\t<name>org.eclipse.wst.validation.validationbuilder</name>')
+        f.write('\t\t\t<arguments>')
+        f.write('\t\t\t</arguments>')
+        f.write('\t\t</buildCommand>')
+        f.write('\t\t<buildCommand>')
+        f.write('\t\t\t<name>org.eclipse.dltk.core.scriptbuilder</name>')
+        f.write('\t\t\t<arguments>')
+        f.write('\t\t\t</arguments>')
+        f.write('\t\t</buildCommand>')
+        f.write('\t</buildSpec>')
+        f.write('\t<natures>')
+        f.write('\t\t<nature>org.eclipse.php.core.PHPNature</nature>')
+        f.write('\t</natures>')
+        f.write('</projectDescription>')
+        f.close()
+
+        os.mkdir('/home/nico/develop/php/' + varProjectname + '/.settings')
+        f = open('/home/nico/develop/php/' + varProjectname + '/.settings/org.eclipse.php.core.prefs', 'w')
+        f.write('#Tue Sep 06 13:23:14 CEST 2011')
+        f.write('eclipse.preferences.version=1')
+        f.write('include_path=0;/' + varProjectname)
+        f.close()
+
+
 
 
 VMbashCommand("mysql -u root -proot -N -e 'CREATE DATABASE `" + varProjectname + "`;'")
