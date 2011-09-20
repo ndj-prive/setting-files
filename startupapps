@@ -1,8 +1,8 @@
 #!/bin/bash
 
 aptana=$HOME"/Aptana Studio 2.0/AptanaStudio"
-applicationsProcess=( nautilus empathy thunderbird-bin VBoxSVC clementine gnome-shell chrome Tasque hotot freemind Aptana )
-applications=( nautilus empathy thunderbird virtualbox clementine terminator google-chrome  tasque hotot freemind $aptana )
+applicationsProcess=( nautilus empathy thunderbird-bin VBoxSVC clementine gnome-shell chrome Tasque hotot freemind netbeans )
+applications=( nautilus empathy thunderbird virtualbox clementine terminator google-chrome  tasque hotot freemind netbeans )
 alreadyRunning="Is already running\n"
 
 totalApplications=${#applications[@]}
@@ -13,6 +13,11 @@ for((i=0;i<$totalApplications;i++))
    then
     echo "Starting ${applications[$i]}..."
     ${applications[$i]} &
+    if [ -z "$(pgrep VBoxSVC)" ]
+     then
+       # virtualbox is not running VBoxSVC
+       VBoxManage startvm "Ubuntu64"
+    fi
     echo "Started up ${applications[$i]}"
   else
     echo "${applications[$i]} $alreadyRunning"
