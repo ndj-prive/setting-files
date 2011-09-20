@@ -160,15 +160,22 @@ alias twitter="google-chrome http://www.twitter.com"
 alias projectSetup="python ~/.projectSetup"
 #alias mountmedia="sudo mount -t vfat /dev/sde2 /media/externalMusic -o uid=1000,gid=100,utf8,dmask=027,fmask=137"
 
+alias runbuild='cd ~/develop/php/ccs/src/ &&  DEVELOP=yes ./build && cd  ../ && buildccsfolder && echo "everything is build"'
+alias buildrun='runbuild'
+
 buildccsfolder (){
   mkdir ~/develop/php/ccs/build_ccs/sites/default/files
   chmod 777 ~/develop/php/ccs/build_ccs/sites/default/files
   chmod 777 ~/develop/php/ccs/build_ccs/sites/default/settings.php
+  echo DROP DATABASE ccs | ssh nico@192.168.56.101 -t mysql -u root -proot
+  echo CREATE DATABASE ccs | ssh nico@192.168.56.101 -t mysql -u root -proot
 for i in {1..4}
 do
   mkdir ~/develop/php/ccs/build_example"$i"/sites/default/files
   chmod 777 ~/develop/php/ccs/build_example"$i"/sites/default/files
   chmod 777 ~/develop/php/ccs/build_example"$i"/sites/default/settings.php
+  echo DROP DATABASE ccs"$i" | ssh nico@192.168.56.101 -t mysql -u root -proot
+  echo CREATE DATABASE ccs"$i" | ssh nico@192.168.56.101 -t mysql -u root -proot
 done
 }
 
