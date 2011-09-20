@@ -148,6 +148,12 @@ alias grep='grep --color=auto'
 alias du='du -h'
 alias df='df -h'
 
+alias devssh1='ssh nico@192.168.56.101'
+alias sshdev1='devssh1'
+
+alias devssh2='ssh nico@192.168.56.102'
+alias sshdev2='devssh1'
+
 alias google="google-chrome http://www.google.com/"
 alias twitter="google-chrome http://www.twitter.com"
 #alias wiki="google-chrome http://en.wikipedia.org/wiki/Main_Page"
