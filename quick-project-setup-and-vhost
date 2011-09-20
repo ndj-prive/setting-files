@@ -143,6 +143,9 @@ def localfileCommands ():
         f.write('include_path=0;/' + varProjectname)
         f.close()
 
+#		varDownloadjQueryProject = str(raw_input('Do we need to donwload jQuery [y/n]: '))
+#		if varDownloadjQueryProject == 'y':
+#			print 'not yet implemnted'
 
 
 
