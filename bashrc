@@ -162,20 +162,24 @@ alias projectSetup="python ~/.projectSetup"
 
 alias runbuild='cd ~/develop/php/ccs/src/ &&  DEVELOP=yes ./build && cd  ../ && buildccsfolder && echo "everything is build"'
 alias buildrun='runbuild'
+alias startupapps='bash .startupapps'
+
+alias gnomestartupapplications='gnome-session-properties'
 
 buildccsfolder (){
   mkdir ~/develop/php/ccs/build_ccs/sites/default/files
   chmod 777 ~/develop/php/ccs/build_ccs/sites/default/files
   chmod 777 ~/develop/php/ccs/build_ccs/sites/default/settings.php
-  echo DROP DATABASE ccs | ssh nico@192.168.56.101 -t mysql -u root -proot
-  echo CREATE DATABASE ccs | ssh nico@192.168.56.101 -t mysql -u root -proot
+  # echo DROP DATABASE ccs \; | ssh nico@192.168.56.101 -tt mysql -u root -proot
+  # echo DROP DATABASE ccs; | ssh nico@192.168.56.101 -t mysql -u root -proot
+  # echo CREATE DATABASE ccs \; | ssh nico@192.168.56.101 -tt mysql -u root -proot
 for i in {1..4}
 do
   mkdir ~/develop/php/ccs/build_example"$i"/sites/default/files
   chmod 777 ~/develop/php/ccs/build_example"$i"/sites/default/files
   chmod 777 ~/develop/php/ccs/build_example"$i"/sites/default/settings.php
-  echo DROP DATABASE ccs"$i" | ssh nico@192.168.56.101 -t mysql -u root -proot
-  echo CREATE DATABASE ccs"$i" | ssh nico@192.168.56.101 -t mysql -u root -proot
+  # echo DROP DATABASE ccs"$i" \; | ssh nico@192.168.56.101 -tt mysql -u root -proot
+  # echo CREATE DATABASE ccs"$i" \; | ssh nico@192.168.56.101 -tt mysql -u root -proot
 done
 }
 
