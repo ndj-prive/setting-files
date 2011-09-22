@@ -143,7 +143,7 @@ alias h="history|grep --color=auto"
 alias f="find . |grep --color=auto"
 alias p="ps aux |grep --color=auto"
 alias o="gnome-open "
-alias grep='grep --color=auto'
+alias grep='grep --color=auto --exclude-dir=".git"'
 
 alias du='du -h'
 alias df='df -h'
