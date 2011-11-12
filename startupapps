@@ -1,8 +1,8 @@
 #!/bin/bash
 
 aptana=$HOME"/Aptana Studio 2.0/AptanaStudio"
-applicationsProcess=( nautilus empathy thunderbird-bin VBoxSVC clementine gnome-shell chrome Tasque hotot freemind netbeans )
-applications=( nautilus empathy thunderbird virtualbox clementine terminator google-chrome  tasque hotot freemind netbeans )
+applicationsProcess=( nautilus empathy thunderbird-bin VBoxSVC clementine gnome-shell chrome Tasque hotot freemind netbeans yarssr )
+applications=( nautilus empathy thunderbird virtualbox clementine terminator google-chrome  tasque hotot freemind netbeans yarssr )
 alreadyRunning="Is already running\n"
 
 totalApplications=${#applications[@]}
